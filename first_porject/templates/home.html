@@ -1,32 +1,29 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Boards</title>
-    </head>
-    <body>
-        <h1>Boards</h1>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Board</th>
-                    <th>Posts</th>
-                    <th>Topic</th>
-                    <th>Last Post</th>
-                </tr>
-            </thead>
-            <tbody>
-                {%for board in boards%}
-                   <tr>
-                        <td>
-                            <a href="">{{board.name}}</a><br>
-                        </td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td></td>
-                   </tr> 
-                {% endfor %}
-            </tbody>
-        </table>
-        
-    </body>
-</html>
+{% extends '_base.html'%}
+    {%block title%}Boards{%endblock%}
+        {%block content%}
+            <h1>Boards</h1>
+            <table class="table caption-top">
+                <caption>List of Boards</caption>
+                <thead class="table-dark">
+                    <tr>
+                        <th>Board</th>
+                        <th>Posts</th>
+                        <th>Topic</th>
+                        <th>Last Post</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for board in boards%}
+                    <tr>
+                            <td>
+                                <a href="{% url 'getTopics' board.pk%}">{{board.name}}</a><br>
+                                <small class="text-muted d-block">{{board.desc}}</small>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td></td>
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+        {%endblock%}

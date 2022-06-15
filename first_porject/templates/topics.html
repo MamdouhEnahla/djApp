@@ -1,0 +1,8 @@
+{% extends '_base.html'%}
+    {%block title%}{{board.name}}{%endblock%}
+    {%block content%}
+        {{board.name}}<br>
+        <!--<a href="{% url 'addTopic' board.pk }">New topic</a><br>-->
+        <a href="{% url 'index'%}">Back</a>
+    {%endblock%}
+    
