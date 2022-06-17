@@ -4,6 +4,15 @@
 
 {%block content%}
     <h1>Add new topic here</h1>
+    <form action="post">
+        {%csrf_token%}
+        <label>Subject</label>
+        <input type="text" name="subject" id="id_subject"><br>
+        <label>Message</label>
+        <textarea name="message" id="id_message" cols="50" rows="7"></textarea><br>
+        <button type="submit" >Post</button>
+
+    </form>
 
 
 
