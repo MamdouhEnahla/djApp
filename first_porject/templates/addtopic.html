@@ -15,11 +15,11 @@
         <label>Message</label>
         <textarea class="form-control" name="message" id="id_message" cols="50" rows="7"></textarea><br>
         </div>
-        <button type="submit" class="btn btn-success" >Add</button>
+        <button type="submit" class="btn btn-outline-success" >Add</button>
 
     </form>
 
 
 
-    <br><a href="{% url 'getTopics' board.name%}">Back</a>
+    <br><a href="{% url 'getTopics' board.name%}" class="btn btn-outline-secondary">Back</a>
 {%endblock%}
