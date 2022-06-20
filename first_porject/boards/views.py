@@ -1,7 +1,7 @@
-
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Board
+from .models import *
 # homepage.
 
 def home(request):
@@ -17,6 +17,23 @@ def getTopics(request, board_id):
     context ={
         'board': board
     }
+    if request.method == 'POST':
+        subject = request.POST['subject']
+        message = request.POST['message']
+        user = User.objects.first()
+        topic = Topic.objects.create(
+            subject = subject,
+            board = board_id,
+            created_by = user,
+            
+        )
+        post = Post.objects.create(
+            message = message,
+            topic = topic,
+            created_by =user,
+            
+        )
+        
     return render(request, 'topics.html', context)
 
 #add newTopic
