@@ -2,7 +2,30 @@
     {%block title%}{{board.name}}{%endblock%}
     {%block content%}
         {{board.name}}<br>
-        <!--<a href="{% url 'addTopic' board.pk }">New topic</a><br>-->
+        <table class="table">
+            <thead class="thaed-inverse">
+                <tr>
+                    <th>Topic</th>
+                    <th>Posts</th>
+                    <th>views</th>
+                    <th>Auther</th>
+                    <th>Create date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for topic in board.topics.all%}
+                <tr>
+                    <td>{{topic.subject}}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>{{topic.created_by.username}}</td>
+                    <td>{{topic.created_at}}</td>
+
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <a href="{% url 'addTopic' board.name%}">New</a><br>
         <a href="{% url 'index'%}">Back</a>
     {%endblock%}
     

@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
 from .models import *
-# homepage.
 
+# homepage.
 def home(request):
     boards = Board.objects.all()
     context ={
@@ -12,9 +12,19 @@ def home(request):
     return render(request, 'home.html', context)
 
 #view current topics
-def getTopics(request, board_id):
-    board = get_object_or_404(Board, pk=board_id)
+def getTopics(request, board_name):
+    board = get_object_or_404(Board,name=board_name)
     context ={
+        'board': board
+    }
+    
+        
+    return render(request, 'topics.html', context)
+
+#add newTopic
+def addTopic(request, board_name):
+    board = get_object_or_404(Board, name=board_name)
+    context={
         'board': board
     }
     if request.method == 'POST':
@@ -22,8 +32,8 @@ def getTopics(request, board_id):
         message = request.POST['message']
         user = User.objects.first()
         topic = Topic.objects.create(
+            board = board,
             subject = subject,
-            board = board_id,
             created_by = user,
             
         )
@@ -33,15 +43,7 @@ def getTopics(request, board_id):
             created_by =user,
             
         )
-        
-    return render(request, 'topics.html', context)
-
-#add newTopic
-def addTopic(request, board_id):
-    board = get_object_or_404(Board, pk=board_id)
-    context={
-        'board': board
-    }
+        return redirect('getTopics', board_name=board.name)
     return render(request, 'addtopic.html', context)
 
 #about page
