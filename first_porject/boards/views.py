@@ -1,6 +1,8 @@
+
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
+from .forms import addNewTopic
 from .models import *
 
 # homepage.
@@ -13,7 +15,7 @@ def home(request):
 
 #view current topics
 def getTopics(request, board_name):
-    board = get_object_or_404(Board,name=board_name)
+    board = get_object_or_404(Board, name=board_name)
     context ={
         'board': board
     }
@@ -24,26 +26,27 @@ def getTopics(request, board_name):
 #add newTopic
 def addTopic(request, board_name):
     board = get_object_or_404(Board, name=board_name)
+    user = User.objects.first()
+    if request.method =='POST':
+        form = addNewTopic(request.POST)
+        if form.is_valid():
+            topic = form.save(commit=False)
+            topic.board = board
+            topic.created_by = user
+            topic.save()
+
+            post= Post.objects.create(
+                message = form.cleaned_data.get('message'),
+                created_by = user,
+                topic = topic,
+            )
+            return redirect('getTopics', board_name= board.name)
+    else:
+        form =addNewTopic()
     context={
-        'board': board
-    }
-    if request.method == 'POST':
-        subject = request.POST['subject']
-        message = request.POST['message']
-        user = User.objects.first()
-        topic = Topic.objects.create(
-            board = board,
-            subject = subject,
-            created_by = user,
-            
-        )
-        post = Post.objects.create(
-            message = message,
-            topic = topic,
-            created_by =user,
-            
-        )
-        return redirect('getTopics', board_name=board.name)
+                'board': board,
+                'form': form,
+            }
     return render(request, 'addtopic.html', context)
 
 #about page
