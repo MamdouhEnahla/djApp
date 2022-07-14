@@ -1,0 +1,12 @@
+{%extends '_base.html'%}
+{%block body%}
+<div class="container">
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% include 'includes/form.html'%}
+        <button type="submit" class="btn btn-primary">create new user</button>
+        <a href="{%url 'login'%}" class="btn btn-outline-success">Log In</a>
+
+    </form>
+</div>
+{%endblock body%}
