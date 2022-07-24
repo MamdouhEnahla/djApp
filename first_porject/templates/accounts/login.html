@@ -3,6 +3,7 @@
 <div class="container">
     <form method="post" novalidate>
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
         {% include 'includes/form.html'%}
         <button type="submit" class="btn btn-success">Log In</button>
         <a href="{%url 'signup'%}" class="btn btn-outline-primary">Create new account</a>

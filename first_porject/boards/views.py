@@ -2,6 +2,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .forms import addNewTopic
 from .models import *
 
@@ -24,9 +25,10 @@ def getTopics(request, board_name):
     return render(request, 'topics.html', context)
 
 #add newTopic
+@login_required
 def addTopic(request, board_name):
     board = get_object_or_404(Board, name=board_name)
-    user = User.objects.first()
+    user = request.user
     if request.method =='POST':
         form = addNewTopic(request.POST)
         if form.is_valid():
