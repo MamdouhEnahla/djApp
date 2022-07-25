@@ -17,7 +17,7 @@
                 {%for topic in board.topics.all%}
                 
                 <tr>
-                    <td>{{topic.subject}}</td>
+                    <td><a href="{%url 'topic_posts' board.pk topic.pk%}">{{topic.subject}}</a></td>
                     <td>0</td>
                     <td>0</td>
                     <td>{{topic.created_by.username}}</td>
@@ -27,7 +27,7 @@
                 {%endfor%}
             </tbody>
         </table>
-        <a href="{% url 'addTopic' board.name%}"class="btn btn-outline-primary">New</a><br>
+        <a href="{% url 'addTopic' board.pk%}"class="btn btn-outline-primary">New</a><br>
         <a href="{% url 'index'%}"class="btn btn-outline-secondary">Back</a>
     {%endblock%}
     

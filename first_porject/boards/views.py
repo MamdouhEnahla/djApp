@@ -15,19 +15,18 @@ def home(request):
     return render(request, 'home.html', context)
 
 #view current topics
-def getTopics(request, board_name):
-    board = get_object_or_404(Board, name=board_name)
+def getTopics(request, board_id):
+    board = get_object_or_404(Board, pk=board_id)
     context ={
         'board': board
     }
     
-        
     return render(request, 'topics.html', context)
 
 #add newTopic
 @login_required
-def addTopic(request, board_name):
-    board = get_object_or_404(Board, name=board_name)
+def addTopic(request, board_id):
+    board = get_object_or_404(Board, pk=board_id)
     user = request.user
     if request.method =='POST':
         form = addNewTopic(request.POST)
@@ -42,7 +41,7 @@ def addTopic(request, board_name):
                 created_by = user,
                 topic = topic,
             )
-            return redirect('getTopics', board_name= board.name)
+            return redirect('getTopics', board_id= board.pk)
     else:
         form =addNewTopic()
     context={
@@ -51,6 +50,13 @@ def addTopic(request, board_name):
             }
     return render(request, 'addtopic.html', context)
 
+#get topic posts
+def topic_posts(request, board_id, topic_id):
+    topic = get_object_or_404(Topic, board__pk= board_id, pk= topic_id)
+    context ={
+        'topic':topic
+    }
+    return render(request, 'posts.html', context)
 #about page
 def about(request):
     return HttpResponse("<h1>About page</h1>")
