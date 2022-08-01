@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Topic
+from .models import Topic, Post 
 
 class addNewTopic(forms.ModelForm):
     subject = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'what is the subject?',}), max_length=250)
@@ -12,3 +12,8 @@ class addNewTopic(forms.ModelForm):
     class Meta:
         model = Topic
         fields = ['subject', 'message']
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['message', ]

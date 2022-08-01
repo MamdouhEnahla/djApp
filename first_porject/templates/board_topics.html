@@ -27,7 +27,7 @@
                 {%endfor%}
             </tbody>
         </table>
-        <a href="{% url 'addTopic' board.pk%}"class="btn btn-outline-primary">New</a><br>
+        <a href="{% url 'new_topic' board.pk%}"class="btn btn-outline-primary">New</a><br>
         <a href="{% url 'index'%}"class="btn btn-outline-secondary">Back</a>
     {%endblock%}
     

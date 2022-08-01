@@ -1,0 +1,22 @@
+{% extends '_base.html'%}
+    {%block title%}{{topic.subject}}{%endblock%}
+    {%block content%}
+        <a href="{% url 'board_topics' topic.board.pk%}">{{topic.board.name}}</a>/{{topic.subject}}/{{topic.post}}
+        <form method="post" class="mb-4">
+            {%csrf_token%}
+            {%include 'includes/form.html'%}
+            <button type="submit" class="btn btn-success">Post the reply</button>
+
+        </form>
+        {% for post in topic.posts.all%}
+        <div class="col-10">
+            <div class="row mb-3">
+            
+                <p>Auther : {{post.created_by.username}}</p>
+                <p>Created at : {{post.created_at}}</p>
+            </div>
+            {{post.message}}
+        </div>
+        {%endfor%}
+    {%endblock%}
+    
