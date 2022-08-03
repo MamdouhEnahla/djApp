@@ -1,5 +1,4 @@
-
-from operator import pos
+from django.db.models import Count
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
@@ -18,8 +17,10 @@ def home(request):
 #view current topics
 def board_topics(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
+    topics  = board.topics.order_by('-created_at').annotate(comments =Count('posts'))
     context ={
-        'board': board
+        'board': board,
+        'topics': topics,
     }
     
     return render(request, 'board_topics.html', context)
@@ -49,7 +50,7 @@ def new_topic(request, board_id):
                 'board': board,
                 'form': form,
             }
-    return render(request, 'addtopic.html', context)
+    return render(request, 'new_topic.html', context)
 
 #get topic posts
 def topic_posts(request, board_id, topic_id):
