@@ -1,0 +1,16 @@
+{%extends '_base.html'%}
+
+{%block title%}Edit Post{%endblock%}
+
+{%block content%}
+
+    <h1><a href="{% url 'board_topics' post.topic.board.pk%}">{{post.topic.board.name}}</a>//<a href="{% url 'topic_posts' post.topic.board.pk  post.topic.pk%}">{{post.topic.subject}}</a>/ Edit Post</h1>
+    <form method="post" novalidate class="mb-4">
+        {%csrf_token%}
+        {%include 'includes/form.html'%}
+        <button type="submit" class="btn btn-success" >Save changes</button>
+
+    </form>
+
+    <br><a href="{% url 'board_topics' post.topic.board.pk%}" class="btn btn-outline-secondary">Back</a>
+{%endblock%}
