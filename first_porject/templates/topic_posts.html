@@ -15,7 +15,8 @@
                     </div>
                 </div>
                 {%if post.created_by == user%}
-                    <button class="btn btn-primary">edit</button>
+                    <a href="{%url 'edit_post' post.topic.board.pk post.topic.pk post.pk%}" class="btn btn-primary btn-sm" role="button">Edit</a>
+
                 {%endif%}
             {%endfor%}
         </div>
